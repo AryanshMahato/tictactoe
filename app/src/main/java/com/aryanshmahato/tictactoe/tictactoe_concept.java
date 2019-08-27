@@ -1,31 +1,54 @@
 package com.aryanshmahato.tictactoe;
 
-import android.util.Log;
-import android.view.View;
-import android.widget.ImageView;
-
-import es.dmoral.toasty.Toasty;
+import java.util.ArrayList;
 
 public class tictactoe_concept {
-  public void input(ImageView imageView, char turn){
-    if (turn == 'X'){
-      clickedX(imageView);
-    }
-    else if (turn == 'O'){
-      clickedO(imageView);
-    }
-    else {
-      Log.d("100001", "Some error Occurred");
-    }
-  }
+ public boolean winnerAlgo(ArrayList<Integer> array){
 
-  public void clickedO(ImageView imageView){
-    imageView.setImageResource(R.drawable.ic_cross);
-  }
-  public void clickedX(ImageView imageView){
-    imageView.setImageResource(R.drawable.ic_circle);
+//   Winning Positions are:
+//   1,2,3
+//   1,4,7
+//   1,5,9
+//   2,5,8
+//   3,5,7
+//   3,6,9
+//   4,5,6
+//   7,8,9
 
-  }
+//   In below Codes, It's checking wether the arrayList contains the winning Position or not
+//   If ArrayList contains winning positions then the function will return true
+
+
+   if (array.contains(1) && array.contains(2) && array.contains(3)){
+     return true;
+   }
+   else  if (array.contains(1) && array.contains(4) && array.contains(7)){
+     return true;
+   }
+   else  if (array.contains(1) && array.contains(5) && array.contains(9)){
+     return true;
+   }
+   else  if (array.contains(2) && array.contains(5) && array.contains(8)){
+     return true;
+   }
+   else  if (array.contains(3) && array.contains(5) && array.contains(7)){
+     return true;
+   }
+   else  if (array.contains(3) && array.contains(6) && array.contains(9)){
+     return true;
+   }
+   else  if (array.contains(4) && array.contains(5) && array.contains(6)){
+     return true;
+   }
+   else  if (array.contains(7) && array.contains(8) && array.contains(9)){
+     return true;
+   }
+
+
+   return false;
+
+
+ }
 }
 
 

@@ -1,16 +1,15 @@
 package com.aryanshmahato.tictactoe;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.Toast;
+
+import java.util.ArrayList;
 
 import es.dmoral.toasty.Toasty;
 
@@ -18,12 +17,18 @@ public class DoublePlayer extends AppCompatActivity {
   ImageView box0, box1, box2, box3, box4, box5, box6, box7, box8;
   boolean canDo0, canDo1, canDo2, canDo3, canDo4,canDo5, canDo6, canDo7, canDo8;
   char turn='X';
+  ArrayList<Integer> XValue=new ArrayList<>();  //To store the positions occupied by X
+  ArrayList<Integer> OValue=new ArrayList<>();  //To store the positions occupied by O
+  tictactoe_concept tictactoeConcept=new tictactoe_concept();
+
+
 
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_double_player);
+
 
     box0=findViewById(R.id.box1);
     box1=findViewById(R.id.box2);
@@ -59,6 +64,7 @@ public class DoublePlayer extends AppCompatActivity {
 
   }
 
+
   public void changeTurn(){
     if (turn=='X'){
       turn='Y';
@@ -84,14 +90,15 @@ public class DoublePlayer extends AppCompatActivity {
     box0.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
-        if (canDo0) {
-          if (turn == 'X') {
+        if (canDo0) { //Checking if we are over writing our Box
+          if (turn == 'X') { //Checking whose Turn is this, Either X or O
             box0.setImageResource(R.drawable.ic_cross);
           } else {
             box0.setImageResource(R.drawable.ic_circle);
           }
-          canDo0 = false;
+          canDo0 = false; //Changing Over Writing flag to false
 
+          injecting(turn, 1);
           changeTurn();
         }
       }
@@ -110,6 +117,7 @@ public class DoublePlayer extends AppCompatActivity {
           }
           canDo1 = false;
 
+          injecting(turn, 2);
           changeTurn();
         }
       }
@@ -128,6 +136,7 @@ public class DoublePlayer extends AppCompatActivity {
           }
           canDo2 = false;
 
+          injecting(turn, 3);
           changeTurn();
         }
       }
@@ -145,7 +154,7 @@ public class DoublePlayer extends AppCompatActivity {
             box3.setImageResource(R.drawable.ic_circle);
           }
           canDo3 = false;
-
+          injecting(turn, 4);
           changeTurn();
         }
       }
@@ -163,7 +172,7 @@ public class DoublePlayer extends AppCompatActivity {
             box4.setImageResource(R.drawable.ic_circle);
           }
           canDo4 = false;
-
+          injecting(turn, 5);
           changeTurn();
         }
       }
@@ -181,7 +190,7 @@ public class DoublePlayer extends AppCompatActivity {
             box5.setImageResource(R.drawable.ic_circle);
           }
           canDo5 = false;
-
+          injecting(turn, 6);
           changeTurn();
         }
       }
@@ -199,7 +208,7 @@ public class DoublePlayer extends AppCompatActivity {
             box6.setImageResource(R.drawable.ic_circle);
           }
           canDo6 = false;
-
+          injecting(turn, 7);
           changeTurn();
         }
       }
@@ -217,7 +226,7 @@ public class DoublePlayer extends AppCompatActivity {
             box7.setImageResource(R.drawable.ic_circle);
           }
           canDo7 = false;
-
+          injecting(turn, 8);
           changeTurn();
         }
       }
@@ -235,7 +244,7 @@ public class DoublePlayer extends AppCompatActivity {
             box8.setImageResource(R.drawable.ic_circle);
           }
           canDo8 = false;
-
+          injecting(turn, 9);
           changeTurn();
         }
       }
@@ -243,12 +252,38 @@ public class DoublePlayer extends AppCompatActivity {
   }
 
 
+  public void injecting(char whoseTurn, int position){
+    if (whoseTurn=='X'){
+      XValue.add(position);
+    }else{
+      OValue.add(position);
+    }   //To register positions of X and O in XValue and OValue
+
+    if (tictactoeConcept.winnerAlgo(XValue)){ //winnerAlgo returns true when X occupies the winning positions
+      XIsWinner();
+    }else if (tictactoeConcept.winnerAlgo(OValue)){
+      OIsWinner();
+    }
+
+  }
+
+
+  public void XIsWinner(){
+    Toasty.success(getApplicationContext(), "X is Winner", Toast.LENGTH_LONG).show();
+  }
+
+  public void OIsWinner(){
+    Toasty.success(getApplicationContext(), "O is Winner", Toast.LENGTH_LONG).show();
+  }
+
+
 
 }
 
 
-
-
+//TODO: Build a better UX when Someone Wins!
+//TODO: Implement points counting
+//TODO: Add Restart Button(Set points to 0 also)
 
 
 
