@@ -1,12 +1,17 @@
 package com.aryanshmahato.tictactoe;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -20,6 +25,10 @@ public class DoublePlayer extends AppCompatActivity {
   ArrayList<Integer> XValue=new ArrayList<>();  //To store the positions occupied by X
   ArrayList<Integer> OValue=new ArrayList<>();  //To store the positions occupied by O
   tictactoe_concept tictactoeConcept=new tictactoe_concept();
+  int Xpoints=0, Opoints=0;
+  TextView playerX, playerO;
+  boolean flag=false;
+
 
 
 
@@ -28,6 +37,17 @@ public class DoublePlayer extends AppCompatActivity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_double_player);
+
+
+    try {
+      Xpoints = getIntent().getExtras().getInt("Xpoint");
+      Opoints = getIntent().getExtras().getInt("Opoint");
+
+
+    } catch (Exception e) {
+      Toasty.success(DoublePlayer.this, "DOne", Toast.LENGTH_SHORT).show();
+      e.printStackTrace();
+    }
 
 
     box0=findViewById(R.id.box1);
@@ -39,6 +59,12 @@ public class DoublePlayer extends AppCompatActivity {
     box6=findViewById(R.id.box7);
     box7=findViewById(R.id.box8);
     box8=findViewById(R.id.box9);
+
+    playerO = findViewById(R.id.textView_scoreBoardTwo);
+    playerX = findViewById(R.id.textView_scoreBoardOne);
+
+    Ocounter();
+    Xcounter();
 
     canDo0=true;
     canDo1=true;
@@ -269,11 +295,66 @@ public class DoublePlayer extends AppCompatActivity {
 
 
   public void XIsWinner(){
-    Toasty.success(getApplicationContext(), "X is Winner", Toast.LENGTH_LONG).show();
+
+    final Dialog mDialog = new Dialog(this);
+
+    mDialog.setContentView(R.layout.winning_popup_xwinner);
+    mDialog.setTitle("Everything is set");
+    mDialog.show();
+    ++Xpoints;
+    Xcounter();
+
+    mDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+      @Override
+      public void onCancel(DialogInterface dialog) {
+        mDialog.dismiss();
+        reset();
+      }
+    });
+
   }
 
   public void OIsWinner(){
-    Toasty.success(getApplicationContext(), "O is Winner", Toast.LENGTH_LONG).show();
+    final Dialog mDialog = new Dialog(this);
+
+
+    mDialog.setContentView(R.layout.winning_popup_owinner);
+    mDialog.setTitle("Everything is set");
+    mDialog.show();
+    ++Opoints;
+    Ocounter();
+
+    mDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+      @Override
+      public void onCancel(DialogInterface dialog) {
+        mDialog.dismiss();
+        reset();
+      }
+    });
+
+
+  }
+
+
+  public void reset(){
+    Intent intent = getIntent();
+    overridePendingTransition(0, 0);
+    intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+    intent.putExtra("Xpoint", Xpoints);
+    intent.putExtra("Opoint", Opoints);
+    finish();
+    overridePendingTransition(0, 0);
+    startActivity(intent);
+  }
+
+  public void Ocounter(){
+
+    playerO.setText("PLAYER 2 (O): "+ Opoints);
+  }
+
+  public void Xcounter(){
+
+    playerX.setText("PLAYER 1 (X): "+ Xpoints);
   }
 
 
@@ -281,8 +362,8 @@ public class DoublePlayer extends AppCompatActivity {
 }
 
 
-//TODO: Build a better UX when Someone Wins!
-//TODO: Implement points counting
+//TODO: Build a better UX when Someone Wins! --Working: Found a solution(To be tested) (DONE)
+//TODO: Implement points counting --Working: Found a solution(To be tested)
 //TODO: Add Restart Button(Set points to 0 also)
 
 

@@ -24,6 +24,8 @@ public class MainActivity extends AppCompatActivity {
 
   public void button_SinglePlayer_clicked(View view){
     Intent intent = new Intent(this, SinglePlayer.class);
+    intent.putExtra("Xpoint", 0);
+    intent.putExtra("Opoint", 0);
     startActivity(intent);
   }
 
