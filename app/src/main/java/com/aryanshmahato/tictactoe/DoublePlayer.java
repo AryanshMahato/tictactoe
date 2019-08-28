@@ -81,7 +81,7 @@ public class DoublePlayer extends AppCompatActivity {
     box7Clicked();
     box8Clicked();
 
-
+    Restart();
   }
 
 
@@ -285,6 +285,10 @@ public class DoublePlayer extends AppCompatActivity {
       OIsWinner();
     }
 
+    if (XValue.size() + OValue.size() == 9){
+      matchDraw();
+    }
+
   }
 
 
@@ -328,6 +332,22 @@ public class DoublePlayer extends AppCompatActivity {
 
   }
 
+  public void matchDraw(){
+    final Dialog mDialog = new Dialog(this);  //A Dialog Declaring the winner
+
+    mDialog.setContentView(R.layout.match_draw);
+    mDialog.setTitle("Everything is set");
+    mDialog.show();
+
+    mDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {  //Refresh the app when Dialog Dismisses
+      @Override
+      public void onCancel(DialogInterface dialog) {
+        mDialog.dismiss();  //Dismiss The Dialog
+        reset();  //Resets the Game, Do not reset's ScoreBoard
+      }
+    });
+  }
+
 
   public void reset(){
     Intent intent = getIntent();  //Resetting Via Intent
@@ -346,6 +366,10 @@ public class DoublePlayer extends AppCompatActivity {
 
   public void Xcounter(){
     playerX.setText("PLAYER 1 (X): "+ Xpoints); //Changes onScreen ScoreBoard
+  }
+
+  public void Restart(){
+
   }
 
 
