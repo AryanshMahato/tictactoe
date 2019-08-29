@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -18,6 +19,7 @@ import es.dmoral.toasty.Toasty;
 
 public class DoublePlayer extends AppCompatActivity {
   ImageView box0, box1, box2, box3, box4, box5, box6, box7, box8;
+  Button Restart;
   boolean canDo0, canDo1, canDo2, canDo3, canDo4,canDo5, canDo6, canDo7, canDo8;
   char turn='X';
   ArrayList<Integer> XValue=new ArrayList<>();  //To store the positions occupied by X
@@ -43,6 +45,7 @@ public class DoublePlayer extends AppCompatActivity {
       e.printStackTrace();
     }
 
+    Restart = findViewById(R.id.button_Restart);
 
     box0=findViewById(R.id.box1);
     box1=findViewById(R.id.box2);
@@ -287,7 +290,7 @@ public class DoublePlayer extends AppCompatActivity {
 
     if (XValue.size() + OValue.size() == 9){
       matchDraw();
-    }
+    } //Checks if all places are occupied or not in board! If yes then calls draw
 
   }
 
@@ -369,7 +372,21 @@ public class DoublePlayer extends AppCompatActivity {
   }
 
   public void Restart(){
+    Restart.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View view) {
+        Toasty.success(DoublePlayer.this, "Restarted! Best of Luck", Toast.LENGTH_SHORT).show();
 
+        Intent intent = getIntent();  //Resetting Via Intent
+        overridePendingTransition(0, 0);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        intent.putExtra("Xpoint", 0); //Pass Points to new refreshed screen to keep the ScoreBoard Alive
+        intent.putExtra("Opoint", 0);
+        finish();
+        overridePendingTransition(0, 0);
+        startActivity(intent);
+      }
+    });
   }
 
 
@@ -377,9 +394,7 @@ public class DoublePlayer extends AppCompatActivity {
 }
 
 
-//TODO: Build a better UX when Someone Wins! --Working: Found a solution(To be tested) (DONE)
-//TODO: Implement points counting --Working: Found a solution(To be tested) (DONE)
-//TODO: Add Restart Button(Set points to 0 also)
+//TODO: (Commit this change) Add Restart Button(Set points to 0 also)
 
 
 
