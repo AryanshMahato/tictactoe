@@ -28,10 +28,7 @@ public class DoublePlayer extends AppCompatActivity {
   int Xpoints=0, Opoints=0; //Stores the points of each Player(O,X)
   TextView playerX, playerO;  //ScoreBoard texts
 
-
-
-
-
+//Main onCreate Function
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -287,8 +284,7 @@ public class DoublePlayer extends AppCompatActivity {
     }else if (tictactoeConcept.winnerAlgo(OValue)){
       OIsWinner();
     }
-
-    if (XValue.size() + OValue.size() == 9){
+    else if (XValue.size() + OValue.size() == 9){
       matchDraw();
     } //Checks if all places are occupied or not in board! If yes then calls draw
 
