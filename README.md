@@ -11,7 +11,6 @@ It's a simple frontend Tic Tac Toe game with no implementation of One vs CPU alg
 * Draw Algoritm
 
 <br/>
-<br/>
 
 ### Some ScreenShots
 <div>
@@ -21,7 +20,6 @@ It's a simple frontend Tic Tac Toe game with no implementation of One vs CPU alg
 <img image src="./screenshots/draw.png" alt="Draw" width="200px" title="Draw"/>
 </div>
 
-<br/>
 <br/>
 
 ### How to use
