@@ -33,4 +33,4 @@ It's a simple frontend Tic Tac Toe game with no implementation of One vs CPU alg
 <br/>
 <br/>
 
-If You liked my Project then please start the repository.
+If You liked my Project then please star the repository.
